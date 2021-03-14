@@ -1,14 +1,12 @@
 import express from "express"
-import user from"./src/controllers/user"
+import user from "./controllers/user"
 
 const routes = express.Router()
 
-routes.get("/user", user.index)
-routes.get("/user/create", user.create)
-routes.get("/user/:id", user.show)
-routes.post("/user", user.post)
-routes.get("/user/:id/edit", user.edit)
-routes.put("/user", user.put)
-routes.delete("/user", user.delete)
+routes.get("/user", user.getAll)
+routes.get("/user/:id", user.getById)
+routes.post("/user", user.create)
+routes.put("/user/:id", user.updateById)
+// routes.delete("/user", user.delete)
 
 module.exports = routes

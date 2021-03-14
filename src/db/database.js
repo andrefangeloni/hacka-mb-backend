@@ -1,7 +1,7 @@
 import { Pool } from "pg";
 
 module.exports = new Pool({
-    user: "jornada_db",
+    user: "postgres",
     password: "123",
     host: "localhost",
     port: 5432,

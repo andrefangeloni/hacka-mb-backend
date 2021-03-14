@@ -8,13 +8,8 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(routes);
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
-
-
 app.listen(3303, () => {
-  console.log("onlineeeeeee")
+  console.log("Server online!!!!")
 })
 
 export default app;
