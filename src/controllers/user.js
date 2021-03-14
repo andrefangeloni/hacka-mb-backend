@@ -20,8 +20,20 @@ module.exports = {
   },
 
   async updateById(req, res) {
-    const results = await User.updateById(req.params.id, req.body)
+    await User.updateById(req.body)
 
-    return res.json({ userId: `${results.rows[0].id}` })
+    return res.json({ message: "user update success" })
+  },
+
+  async updateByIdCreate(req, res) {
+    await User.updateByIdCreate(req.body)
+
+    return res.json({ message: "user update success" })
+  },
+
+  async delete(req, res) {
+    await User.delete(req.body.id)
+
+    return res.json({ message: "user delete success" })
   }
 }
