@@ -1,4 +1,6 @@
 import db from "../database"
+import SoftSkillGoal from "./soft-skill-goal"
+import TechnologyGoal from "./technology-goal"
 
 module.exports = {
   getAll() {
@@ -55,7 +57,7 @@ module.exports = {
     return db.query(query, values)
   },
 
-  updateByIdCreate(user) {
+  async updateAndCreateGoals(id, user) {
     const query = `
       UPDATE tb_user SET
         int_occupation_area=($1),
@@ -73,7 +75,17 @@ module.exports = {
       user.id
     ]
 
-    return db.query(query, values)
+    await db.query(query, values)
+
+    await SoftSkillGoal.create(id)
+
+    await TechnologyGoal.create(id)
+
+    return
+  },
+
+  emailInUse(email) {
+    return db.query(`SELECT str_email FROM tb_user WHERE str_email = $1`, [email])
   },
 
   delete(id) {

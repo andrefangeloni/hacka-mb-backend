@@ -14,6 +14,12 @@ module.exports = {
   },
 
   async create(req, res) {
+    const emailInUse = await User.emailInUse(req.body.email)
+
+    if(emailInUse.rows[0]) {
+      return res.status(400).json({message: "email in use"})
+    }
+
     const results = await User.create(req.body)
 
     return res.json({ userId: `${results.rows[0].id}` })
@@ -25,10 +31,10 @@ module.exports = {
     return res.json({ message: "user update success" })
   },
 
-  async updateByIdCreate(req, res) {
-    await User.updateByIdCreate(req.body)
+  async updateAndCreateGoals(req, res) {
+    await User.updateAndCreateGoals(req.headers.id, req.body)
 
-    return res.json({ message: "user update success" })
+    return res.json({ message: "user update and create goals success" })
   },
 
   async delete(req, res) {

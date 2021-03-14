@@ -12,6 +12,12 @@ module.exports = {
       return res.status(401).json({message: "wrong password"})
     }
 
-    return res.json({message: "login success"})
+    return res.json({userId: `${results.rows[0].id}`})
+  },
+
+  async me(req, res) {
+    const results = await Auth.me(req.headers.id);
+
+    return res.json(results.rows[0])
   }
 }
