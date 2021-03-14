@@ -17,7 +17,7 @@ module.exports = {
     const emailInUse = await User.emailInUse(req.body.email)
 
     if(emailInUse.rows[0]) {
-      return res.status(400).json({message: "email in use"})
+      return res.status(401).json({message: "email in use"})
     }
 
     const results = await User.create(req.body)
@@ -26,7 +26,7 @@ module.exports = {
   },
 
   async updateById(req, res) {
-    await User.updateById(req.body)
+    await User.updateById(req.headers.id, req.body)
 
     return res.json({ message: "user update success" })
   },

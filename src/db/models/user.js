@@ -30,7 +30,7 @@ module.exports = {
     return db.query(query, values)
   },
 
-  updateById(user) {
+  updateById(id, user) {
     const query = `
       UPDATE tb_user SET
         str_name=($1),
@@ -38,8 +38,9 @@ module.exports = {
         str_password=($3),
         int_occupation_area=($4),
         int_senority_level=($5),
-        int_technology=($6),
-        int_technology_level=($7)
+        int_goal_senority_level=($6),
+        int_technology=($7),
+        int_technology_level=($8)
       WHERE id = $8
     `
 
@@ -49,9 +50,10 @@ module.exports = {
       user.password,
       user.occupation_area,
       user.senority_level,
+      user.senority_goal_level,
       user.technology,
       user.technology_level,
-      user.id
+      id
     ]
 
     return db.query(query, values)
@@ -62,17 +64,19 @@ module.exports = {
       UPDATE tb_user SET
         int_occupation_area=($1),
         int_senority_level=($2),
-        int_technology=($3),
-        int_technology_level=($4)
-      WHERE id = $5
+        int_goal_senority_level=($3),
+        int_technology=($4),
+        int_technology_level=($5)
+      WHERE id = $6
     `
 
     const values = [
       user.occupation_area,
       user.senority_level,
+      user.senority_level + 1,
       user.technology,
       user.technology_level,
-      user.id
+      id
     ]
 
     await db.query(query, values)

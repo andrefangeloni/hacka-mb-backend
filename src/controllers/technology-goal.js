@@ -8,8 +8,8 @@ module.exports = {
   },
 
   async updateCompleteById(req, res) {
-    const results = await TechnologyGoal.updateById(req.params.id, req.body)
+    await TechnologyGoal.updateById(req.params.id, req.body)
 
-    return res.json(results.rows)
+    return res.json({message: "update success"})
   }
 }

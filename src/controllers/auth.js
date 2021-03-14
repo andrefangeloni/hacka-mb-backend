@@ -16,8 +16,12 @@ module.exports = {
   },
 
   async me(req, res) {
-    const results = await Auth.me(req.headers.id);
+    const me = await Auth.me(req.headers.id);
+    const meSoftSkills = await Auth.meSoftSkills(req.headers.id);
+    const meTechSkills = await Auth.meTechSkills(req.headers.id);
 
-    return res.json(results.rows[0])
+    const results = [me.rows[0], meSoftSkills.rows, meTechSkills.rows]
+
+    return res.json(results)
   }
 }

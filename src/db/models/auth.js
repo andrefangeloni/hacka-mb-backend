@@ -7,11 +7,43 @@ module.exports = {
 
   me(id) {
     return db.query(`
-      SELECT *, tt.*, ts.*
+      SELECT *
       FROM tb_user
-      INNER JOIN tb_user_technological_goals tt ON tt.id_user = tb_user.id
-      INNER JOIN tb_user_soft_skills_goals ts ON ts.id_user = tb_user.id
-      WHERE tb_user.id = $1`, [id]
+      WHERE id = $1`, [id]
+    )
+  },
+
+  meSoftSkills(id) {
+    return db.query(`
+      SELECT (
+        SELECT count(id)
+          FROM tb_user_soft_skills_goals
+          WHERE id_user = ${id}
+        ) AS "totalSoftSkill",
+        (
+          SELECT count(id)
+            FROM tb_user_soft_skills_goals
+            WHERE id_user = ${id}
+            AND bo_complete = true
+        ) AS "totalCompleteSoftSkill"
+      `
+    )
+  },
+
+  meTechSkills(id) {
+    return db.query(`
+    SELECT (
+      SELECT count(id)
+        FROM tb_user_technological_goals
+        WHERE id_user = ${id}
+      ) AS "totalTechnology",
+      (
+        SELECT count(id)
+          FROM tb_user_technological_goals
+          WHERE id_user = ${id}
+          AND bo_complete = true
+      ) AS "totalCompleteTechnology"
+      `
     )
   }
 }
